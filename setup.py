@@ -37,6 +37,7 @@ setup(
         'plone.app.testing',
         'plone.app.theming',
         'plone.app.robotframework',
+        'robotframework-selenium2screenshots',
     ]},
     entry_points="""
     # -*- Entry points: -*-

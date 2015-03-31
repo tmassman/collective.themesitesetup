@@ -9,5 +9,6 @@ bin
 buildout-cache
 develop-eggs
 dist
+extras
 parts
 var

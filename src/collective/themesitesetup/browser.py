@@ -32,7 +32,7 @@ def genericSetupStepsSource(context):
 class IExportForm(model.Schema):
 
     directory = schema.BytesLine(
-        title=u'Directory name',
+        title=u'Theme sub-directory name',
         default=DEFAULT_ENABLED_PROFILE_NAME
     )
 
@@ -51,6 +51,8 @@ class IExportForm(model.Schema):
 class ExportForm(AutoExtensibleForm, form.Form):
     schema = IExportForm
     ignoreContext = True
+
+    label = u'Export site setup into theme'
 
     def __init__(self, context, request, directory=None):
         self.directory = directory
@@ -114,3 +116,6 @@ class ExportFormView(FormWrapper):
         self.form_instance = self.form(Acquisition.aq_inner(self.context),
                                        self.request, context)
         self.form_instance.__name__ = self.__name__
+
+        # Disable green border
+        self.request.set('show_border', False)
