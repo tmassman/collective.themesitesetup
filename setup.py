@@ -22,10 +22,16 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'setuptools',
+        'Products.GenericSetup',
         'plone.api',
         'plone.app.controlpanel',
         'plone.app.theming',
+        'plone.autoform',
+        'plone.supermodel',
+        'plone.z3cform',
+        'setuptools',
+        'z3c.form',
+        'zope.schema',
     ],
     extras_require={'test': [
         'plone.app.testing',

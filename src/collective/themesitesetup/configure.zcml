@@ -15,7 +15,7 @@
   <browser:page
       name="export-site-setup"
       for="plone.resource.interfaces.IWritableResourceDirectory"
-      class=".export.ExportView"
+      class=".browser.ExportFormView"
       permission="plone.app.controlpanel.Themes"
       />
 

@@ -8,6 +8,8 @@ from plone.app.theming.interfaces import IThemePlugin
 from plone.app.theming.interfaces import THEME_RESOURCE_NAME
 from plone.resource.utils import queryResourceDirectory
 from zope.interface import implements
+from collective.themesitesetup.config import DEFAULT_ENABLED_PROFILE_NAME
+from collective.themesitesetup.config import DEFAULT_DISABLED_PROFILE_NAME
 
 
 FILTERED = ['.objects', '.properties']
@@ -27,11 +29,9 @@ def populateTarball(tar, directory, prefix=''):
         else:
             data = directory.readFile(name)
 
-            # Fix names filtered by resourcedirectory
-            name = {
-                'objects': '.objects',
-                'properties': '.properties',
-            }.get(name, name)
+            # Fix dotted names filtered by resource directory API
+            if name.endswith('.gs'):
+                name = '.' + name[:-3]
 
             info = tarfile.TarInfo(prefix + name)
             info.size = len(data)
@@ -79,7 +79,7 @@ class GenericSetupPlugin(object):
         if res is None:
             return
 
-        directoryName = 'install'
+        directoryName = DEFAULT_ENABLED_PROFILE_NAME
         if 'install' in settings:
             directoryName = settings['install']
 
@@ -98,7 +98,7 @@ class GenericSetupPlugin(object):
         if res is None:
             return
 
-        directoryName = 'uninstall'
+        directoryName = DEFAULT_DISABLED_PROFILE_NAME
         if 'uninstall' in settings:
             directoryName = settings['uninstall']
 
