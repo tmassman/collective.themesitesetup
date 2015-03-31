@@ -49,7 +49,7 @@ The theme should contain the export
     Wait until page contains  structure
 
     Set window size   768  576
-    Capture page screenshot  export-site-setup-01.png
+    Capture page screenshot  export-site-setup-02.png
 
 *** Test cases ***
 
