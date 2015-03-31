@@ -6,8 +6,8 @@ before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 install:
-- python bootstrap.py -c ${BUILDOUT}
-- bin/buildout -N -t 3 -c ${BUILDOUT}
+- python bootstrap.py
+- bin/buildout -N -t 3
 script:
 - bin/test
 - bin/code-analysis
