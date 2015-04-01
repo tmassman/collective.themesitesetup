@@ -5,7 +5,7 @@ collective.themesitesetup
    :target: https://travis-ci.org/datakurre/collective.themesitesetup
 
 **collective.themesitesetup** is a plugin for `plone.app.theming`_. With this
-plugin it's possible to embed an automatically imported generic setup profiles
+plugin it's possible to embed automatically imported generic setup profiles
 into a zipped theme package: one to be imported when theme is activated from
 the theming control panel, and the other one to be imported when theme is
 deactivated (as so called *uninstall profile*).
