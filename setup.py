@@ -35,7 +35,6 @@ setup(
     ],
     extras_require={'test': [
         'plone.app.testing',
-        'plone.app.theming',
         'plone.app.robotframework',
         'robotframework-selenium2screenshots',
     ]},
