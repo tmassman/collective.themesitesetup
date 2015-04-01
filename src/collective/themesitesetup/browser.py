@@ -127,4 +127,4 @@ class ExportFormView(FormWrapper):
         self.form_instance.__name__ = self.__name__
 
         # Disable green border
-        self.request.set('show_border', False)
+        self.request.set('disable_border', True)
