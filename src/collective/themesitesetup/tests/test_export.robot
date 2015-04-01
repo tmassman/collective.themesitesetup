@@ -36,20 +36,13 @@ I submit the export form
     Page should contain  Export site setup
 
     Set window size   768  576
-    Capture and crop page screenshot  export-site-setup-01.png  content
+    Capture and crop page screenshot  export-site-setup.png  content
 
     Click button  Export
     Wait until page contains  Done
 
 The theme should contain the export
     Go to  ${PLONE_URL}/++theme++my-theme/@@theming-controlpanel-mapper
-
-    Wait until page contains  install
-    Click link  install
-    Wait until page contains  structure
-
-    Set window size   768  576
-    Capture page screenshot  export-site-setup-02.png
 
 *** Test cases ***
 

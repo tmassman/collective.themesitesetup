@@ -12,5 +12,7 @@ def test_suite():
                 layer=COLLECTIVE_THEMESITESETUP_ROBOT_TESTING),
         layered(robotsuite.RobotTestSuite("test_enabled.robot"),
                 layer=COLLECTIVE_THEMESITESETUP_ROBOT_TESTING),
+        layered(robotsuite.RobotTestSuite("test_disabled.robot"),
+                layer=COLLECTIVE_THEMESITESETUP_ROBOT_TESTING),
     ])
     return suite

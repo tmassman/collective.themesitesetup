@@ -27,16 +27,6 @@ An imported theme
     Wait until page contains  Modify theme
     Page should contain  My Theme
 
-    Wait until page contains  install
-    Click link  install
-    Wait until page contains  structure
-    Click link  structure
-    Wait until page contains  objects.gs
-    Click link  objects.gs
-
-    Set window size   768  576
-    Capture page screenshot  edit-site-setup.png
-
 I activate the imported theme
     Go to  ${PLONE_URL}/@@theming-controlpanel
     Page should contain  My Theme
@@ -48,10 +38,23 @@ I activate the imported theme
 I see a page imported from theme
     Page should contain  Hello World
 
+I deactivate the imported theme
+    Go to  ${PLONE_URL}/@@theming-controlpanel
+    Page should contain  My Theme
+
+    Click button  Deactivate
+
+    Page should contain  Theme disabled
+
+I see the imported page being deleted
+    Page should not contain  Hello World
+
 *** Test cases ***
 
 Theme activation imports site structure
     Given a site administrator
       And an imported theme
      When I activate the imported theme
-     Then I see a page imported from theme
+      And I see a page imported from theme
+      And I deactivate the imported theme
+     Then I see the imported page being deleted
