@@ -30,8 +30,8 @@ def populateTarball(tar, directory, prefix=''):
             data = directory.readFile(name)
 
             # Fix dotted names filtered by resource directory API
-            if name.endswith('.gs'):
-                name = '.' + name[:-3]
+            if name.endswith('.dotfile'):
+                name = '.' + name[:-8]
 
             info = tarfile.TarInfo(prefix + name)
             info.size = len(data)

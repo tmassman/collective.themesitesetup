@@ -102,8 +102,8 @@ class ExportForm(AutoExtensibleForm, form.Form):
             else:
                 path = info.path
 
-                # Fix dotted names filtered by resource directory API
-                path = re.sub('/\.([^/]+)', '/\\1.gs', path)
+                # Fix dotted names filted by source dictory API
+                path = re.sub('/\.([^/]+)', '/\\1.dotfile', path)
 
                 baseDirectory.writeFile(path, tar.extractfile(info))
 

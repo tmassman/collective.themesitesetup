@@ -31,8 +31,8 @@ An imported theme
     Click link  install
     Wait until page contains  structure
     Click link  structure
-    Wait until page contains  objects.gs
-    Click link  objects.gs
+    Wait until page contains  objects.dotfile
+    Click link  objects.dotfile
 
     Set window size   768  576
     Capture page screenshot  edit-site-setup.png
