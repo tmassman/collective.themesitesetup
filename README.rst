@@ -12,6 +12,13 @@ deactivated (as so called *uninstall profile*).
 
 .. _plone.app.theming: https://pypi.python.org/pypi/plone.app.theming
 
+**Note:** Due to regression in *plone.app.theming*, this package will work only
+when a fixing pull for it is accepted and new version released (1__, 2__, 3__):
+
+__ https://github.com/plone/plone.app.theming/pull/38
+__ https://github.com/plone/plone.app.theming/pull/39
+__ https://github.com/plone/plone.app.theming/pull/40
+
 Once this plugin is included into your Plone site (e.g. including it into the
 buildout eggs list and running the buildout), the plugin is enabled for the
 theme by adding the following line into its ``manifest.cfg``:
