@@ -33,7 +33,7 @@ be customized in ``manifest.cfg``:
 
 The importable profile can be edited TTW through the theme editor:
 
-.. image:: https://raw.githubusercontent.com/datakurre/collective.themesitesetup/master/docs/images/edit-site-setup.png
+.. image:: https://raw.githubusercontent.com/collective/collective.themesitesetup/master/docs/images/edit-site-setup.png
    :width: 768px
    :align: center
 
@@ -45,6 +45,6 @@ into a through-the-web created (editable) theme. The helper form can be reached
 by adding ``@@export-site-setup`` after the theme resource directory URL,
 e.g. ``http://localhost:8080/Plone/++theme++my-theme/@@export-site-setup``:
 
-.. image:: https://raw.githubusercontent.com/datakurre/collective.themesitesetup/master/docs/images/export-site-setup.png
+.. image:: https://raw.githubusercontent.com/collective/collective.themesitesetup/master/docs/images/export-site-setup.png
    :width: 768px
    :align: center
