@@ -42,7 +42,7 @@ class IExportForm(model.Schema):
 
     directives.widget(steps=CheckBoxFieldWidget)
     steps = schema.List(
-        title=u'Steps to export',
+        title=u'Exported steps',
         description=u'Select the steps, which should be included in '
                     u'the export.',
         value_type=schema.Choice(
