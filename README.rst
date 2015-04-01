@@ -38,7 +38,7 @@ The importable profile can be edited TTW through the theme editor:
    :align: center
 
 **Note:** Because the theme editor hides all *dotfiles*, files starting with a
-dot must be renamed to end with ``.gs`` (and to not start with a dot).
+dot must be renamed to end with ``.dotfile`` (and to not start with a dot).
 
 This plugin also provides a helper form for exporting the current site setup
 into a through-the-web created (editable) theme. The helper form can be reached
