@@ -4,6 +4,7 @@ syntax: glob
 *.pyc
 .idea
 .installed.cfg
+.DS_Store
 .mr.developer.cfg
 bin
 buildout-cache

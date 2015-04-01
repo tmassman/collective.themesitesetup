@@ -32,13 +32,19 @@ def genericSetupStepsSource(context):
 class IExportForm(model.Schema):
 
     directory = schema.BytesLine(
-        title=u'Theme sub-directory name',
+        title=u'Directory name',
+        description=u'Give name for the theme sub-directory, where '
+                    u'the generated export should be saved to. '
+                    u'If the directory already exists, '
+                    u'its content may get overridden.',
         default=DEFAULT_ENABLED_PROFILE_NAME
     )
 
     directives.widget(steps=CheckBoxFieldWidget)
     steps = schema.List(
         title=u'Steps to export',
+        description=u'Select the steps, which should be included in '
+                    u'the export.',
         value_type=schema.Choice(
             title=u'Step name',
             source=genericSetupStepsSource
@@ -53,6 +59,9 @@ class ExportForm(AutoExtensibleForm, form.Form):
     ignoreContext = True
 
     label = u'Export site setup into theme'
+    description = (u'Export the current site setup '
+                   u'and save as editable files into this '
+                   u'theme (or resource) directory.')
 
     def __init__(self, context, request, directory=None):
         self.directory = directory

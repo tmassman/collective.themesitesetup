@@ -40,9 +40,9 @@ The importable profile can be edited TTW through the theme editor:
 **Note:** Because the theme editor hides all *dotfiles*, files starting with a
 dot must be renamed to end with ``.gs`` (and to not start with a dot).
 
-The plugin also provides a helper for exporting the current site setup into the
-selected theme. The helper form can be reached by adding
-``@@export-site-setup`` after the theme resource directory URL,
+This plugin also provides a helper form for exporting the current site setup
+into a through-the-web created (editable) theme. The helper form can be reached
+by adding ``@@export-site-setup`` after the theme resource directory URL,
 e.g. ``http://localhost:8080/Plone/++theme++my-theme/@@export-site-setup``:
 
 .. image:: https://raw.githubusercontent.com/datakurre/collective.themesitesetup/master/docs/images/export-site-setup.png
