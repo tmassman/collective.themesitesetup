@@ -1,24 +1,22 @@
 # -*- coding: utf-8 -*-
-import re
+from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
 from io import BytesIO
-import tarfile
-
-import Acquisition
 from plone import api
-from z3c.form.browser.checkbox import CheckBoxFieldWidget
-
-from zope import schema
+from plone.autoform import directives
 from plone.autoform.form import AutoExtensibleForm
 from plone.supermodel import model
-from plone.autoform import directives
 from plone.z3cform.layout import FormWrapper
-from z3c.form import form
 from z3c.form import button
+from z3c.form import form
+from z3c.form.browser.checkbox import CheckBoxFieldWidget
+from zope import schema
 from zope.interface import provider
 from zope.schema.interfaces import IContextSourceBinder
-from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.vocabulary import SimpleTerm
-from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
+from zope.schema.vocabulary import SimpleVocabulary
+import Acquisition
+import re
+import tarfile
 
 
 # noinspection PyUnusedLocal,PyPep8Naming

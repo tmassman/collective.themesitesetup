@@ -17,7 +17,7 @@ class CollectiveThemeSiteSetupLayer(PloneSandboxLayer):
         self.loadZCML(package=collective.themesitesetup.tests)
 
     def setUpPloneSite(self, portal):
-        self.applyProfile(portal, "plone.app.theming:default")
+        self.applyProfile(portal, 'plone.app.theming:default')
 
 
 COLLECTIVE_THEMESITESETUP_FIXTURE =\
@@ -25,12 +25,12 @@ COLLECTIVE_THEMESITESETUP_FIXTURE =\
 
 COLLECTIVE_THEMESITESETUP_INTEGRATION_TESTING = IntegrationTesting(
     bases=(COLLECTIVE_THEMESITESETUP_FIXTURE,),
-    name="Integration")
+    name='Integration')
 COLLECTIVE_THEMESITESETUP_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(COLLECTIVE_THEMESITESETUP_FIXTURE,),
-    name="Functional")
+    name='Functional')
 COLLECTIVE_THEMESITESETUP_ROBOT_TESTING = FunctionalTesting(
     bases=(AUTOLOGIN_LIBRARY_FIXTURE,
            COLLECTIVE_THEMESITESETUP_FIXTURE,
            z2.ZSERVER_FIXTURE),
-    name="Robot")
+    name='Robot')

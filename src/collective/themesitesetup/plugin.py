@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
+from collective.themesitesetup.interfaces import DEFAULT_DISABLED_PROFILE_NAME
+from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
 from io import BytesIO
-import tarfile
-
 from plone import api
-
 from plone.app.theming.interfaces import IThemePlugin
 from plone.app.theming.interfaces import THEME_RESOURCE_NAME
 from plone.resource.utils import queryResourceDirectory
 from zope.interface import implements
-from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
-from collective.themesitesetup.interfaces import DEFAULT_DISABLED_PROFILE_NAME
-
-
-FILTERED = ['.objects', '.properties']
+import tarfile
 
 
 # noinspection PyPep8Naming
