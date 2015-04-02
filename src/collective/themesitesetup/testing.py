@@ -12,7 +12,9 @@ class CollectiveThemeSiteSetupLayer(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         import collective.themesitesetup
+        import collective.themesitesetup.tests
         self.loadZCML(package=collective.themesitesetup)
+        self.loadZCML(package=collective.themesitesetup.tests)
 
     def setUpPloneSite(self, portal):
         self.applyProfile(portal, "plone.app.theming:default")
