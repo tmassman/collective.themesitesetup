@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from collective.themesitesetup.interfaces import DEFAULT_DISABLED_PROFILE_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
+from collective.themesitesetup.interfaces import NO
+from collective.themesitesetup.interfaces import YES
 from io import BytesIO
 from plone import api
 from plone.app.theming.interfaces import IThemePlugin
@@ -46,6 +48,12 @@ def createTarball(directory):
 
 
 # noinspection PyPep8Naming
+def isEnabled(settings):
+    return ((settings.get('enabled') or '').lower() not in NO
+            and (settings.get('disabled') or '').lower() not in YES)
+
+
+# noinspection PyPep8Naming
 class GenericSetupPlugin(object):
     """This plugin can be used to import generic setup profiles
     when theme is enabled or disabled.
@@ -70,6 +78,9 @@ class GenericSetupPlugin(object):
         pass
 
     def onEnabled(self, theme, settings, dependenciesSettings):
+        if not isEnabled(settings):
+            return
+
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
             return
@@ -89,6 +100,9 @@ class GenericSetupPlugin(object):
                 None, purge_old=False, archive=tarball)
 
     def onDisabled(self, theme, settings, dependenciesSettings):
+        if not isEnabled(settings):
+            return
+
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
             return
