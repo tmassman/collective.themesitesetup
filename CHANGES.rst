@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.10.0 (unreleased)
+0.10.0 (2015-04-03)
 -------------------
 
 - Add GS content export support to include non-CMF-containers
