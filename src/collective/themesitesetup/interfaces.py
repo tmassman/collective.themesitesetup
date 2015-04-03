@@ -6,4 +6,4 @@ DEFAULT_DISABLED_PROFILE_NAME = 'uninstall'
 
 
 class IGenericSetupExportableContainer(Interface):
-        """Marker interface for exportable content"""
+    """Marker interface for exportable content"""
