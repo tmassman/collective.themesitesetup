@@ -12,6 +12,8 @@ generic setup steps during theme activation and another one (so called
 *uninstall profile*) when theme is deactivated. Yet, also additionals ets
 can be embedded and imported manually.
 
+See it activating theme site setup at: https://youtu.be/3vkrc7JFUU0
+
 .. _plone.app.theming: https://pypi.python.org/pypi/plone.app.theming
 .. _GenericSetup: https://pypi.python.org/pypi/Products.GenericSetup
 
