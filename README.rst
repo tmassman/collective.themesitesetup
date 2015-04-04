@@ -38,6 +38,16 @@ be customized in ``manifest.cfg``:
    install = my-install
    uninstall = my-uninstall
 
+The site setup import can also be disable whenever required by adding
+the line ``disabled = true`` into the plugin configuration in
+``manifest.cfg``:
+
+.. code:: ini
+
+   [theme:genericsetup]
+   disabled = true
+   ...
+
 The importable profile can be edited TTW through the theme editor:
 
 .. image:: https://raw.githubusercontent.com/collective/collective.themesitesetup/master/docs/images/edit-site-setup.png
@@ -47,11 +57,22 @@ The importable profile can be edited TTW through the theme editor:
 **Note:** Because the theme editor hides all *dotfiles*, files starting with a
 dot must be renamed to end with ``.dotfile`` (and to not start with a dot).
 
-This plugin also provides a helper form for exporting the current site setup
-into a through-the-web created (editable) theme. The helper form can be reached
-by adding ``@@export-site-setup`` after the theme resource directory URL,
-e.g. ``http://localhost:8080/Plone/++theme++my-theme/@@export-site-setup``:
+This plugin also provides a helper forms for exporting the current site setup
+into a through-the-web created (editable) theme and importing the site setup
+steps from the theme folder.
+
+The site setup export form can be reached by adding ``@@export-site-setup``
+after the theme resource directory URL, e.g.
+``http://localhost:8080/Plone/++theme++my-theme/@@export-site-setup``:
 
 .. image:: https://raw.githubusercontent.com/collective/collective.themesitesetup/master/docs/images/export-site-setup.png
    :width: 768px
    :align: center
+
+The site setup import form can be reached by adding ``@@import-site-setup``
+after the theme resource directory URL, e.g.
+``http://localhost:8080/Plone/++theme++my-theme/@@export-site-setup``.
+
+The import form should be especially useful for testing the import and
+performing manual site setup upgrades by importing only the updates step
+or a special upgrade profile directory.
