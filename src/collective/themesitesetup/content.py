@@ -75,10 +75,9 @@ class ManagedSiteRootExporterImporter(StructureFolderWalkingAdapter):
 
         prop_adapter = IINIAware(context, None)
 
+        parser = ConfigParser()
         if prop_adapter is not None:
-            parser = ConfigParser(prop_adapter.as_ini())
-        else:
-            parser = ConfigParser()
+            parser.readfp(BytesIO(prop_adapter.as_ini()))
 
         title = context.Title()
         description = context.Description()
