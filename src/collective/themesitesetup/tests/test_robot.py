@@ -10,6 +10,8 @@ def test_suite():
     suite.addTests([
         layered(robotsuite.RobotTestSuite("test_export.robot"),
                 layer=COLLECTIVE_THEMESITESETUP_ROBOT_TESTING),
+        layered(robotsuite.RobotTestSuite("test_import.robot"),
+                layer=COLLECTIVE_THEMESITESETUP_ROBOT_TESTING),
         layered(robotsuite.RobotTestSuite("test_enabled.robot"),
                 layer=COLLECTIVE_THEMESITESETUP_ROBOT_TESTING),
         layered(robotsuite.RobotTestSuite("test_disabled.robot"),
