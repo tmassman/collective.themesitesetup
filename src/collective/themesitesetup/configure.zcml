@@ -15,6 +15,7 @@
   <browser:page
       name="export-site-setup"
       for="plone.resource.interfaces.IWritableResourceDirectory"
+      layer="plone.app.theming.interfaces.IThemingLayer"
       class=".browser.ExportFormView"
       permission="plone.app.controlpanel.Themes"
       />
@@ -22,6 +23,7 @@
   <browser:page
       name="import-site-setup"
       for="plone.resource.interfaces.IResourceDirectory"
+      layer="plone.app.theming.interfaces.IThemingLayer"
       class=".browser.ImportFormView"
       permission="plone.app.controlpanel.Themes"
       />
