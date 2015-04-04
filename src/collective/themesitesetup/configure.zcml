@@ -19,6 +19,13 @@
       permission="plone.app.controlpanel.Themes"
       />
 
+  <browser:page
+      name="import-site-setup"
+      for="plone.resource.interfaces.IResourceDirectory"
+      class=".browser.ImportFormView"
+      permission="plone.app.controlpanel.Themes"
+      />
+
   <class class="Products.PageTemplates.ZopePageTemplate.ZopePageTemplate">
     <implements interface="Products.GenericSetup.interfaces.IDAVAware"/>
   </class>
