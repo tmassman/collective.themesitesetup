@@ -128,3 +128,42 @@ the import setup form. Simply
    ``http://localhost:8080/Plone/++theme++my-theme/@@import-site-setup``:
 
 2. Choose the steps you wish to import and click *Import*.
+
+
+Better site structure export and import
+---------------------------------------
+
+This package includes optional enhancements for the default Plone site
+structure export and import.
+
+The enhancements include:
+
+- support for News Item contents
+- support for Zope Page Templates
+- support for Python Scripts
+- support for exporting tagged hidden folders (like ``portal_skins/custom``)
+
+The enhancements can be activated by including a special component
+configuration file in your Plone buildout's instance parts with:
+
+.. code:: ini
+
+   [instance]
+   ...
+   zcml = collective.themesitesetup-extras
+
+ZMI-only content, which is hidden in Plone (folders like ``portal_skins``) can
+be included in the export by tagging the folders in ZMI interface tab with a
+special marker interface::
+
+    ``collective.themesitesetup.interfaces.IGenericSetupExportableContainer``
+
+
+PageTemplates and PythonScripts can only be exported when they are located in a
+ZMI-only container with this marker interface. So, if you'd like to export
+contents in ``portal_skins/custom``, you should add one marker for
+``portal_skins`` and the other for ``custom``.
+
+This is only required when exporting ZMI-only content. Importing ZMI-only
+content works according to normal structure import rules without these marker
+interfaces.
