@@ -4,8 +4,8 @@ Changelog
 0.11.1 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Update README
+  [datakurre]
 
 0.11.0 (2015-04-04)
 -------------------
