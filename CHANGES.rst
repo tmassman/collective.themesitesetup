@@ -1,11 +1,14 @@
 Changelog
 =========
 
-0.10.1 (unreleased)
+0.11.0 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Add site setup import view to allow testing manual upgrading of site setups
+  [datakurre]
+- Add option to disable setup steps import via plugin configuration variable in
+  theme manifest (either with 'enabled = false' or 'disabled = true')
+  [datakurre]
 
 0.10.0 (2015-04-03)
 -------------------
