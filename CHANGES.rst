@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.12.0 (unreleased)
+0.12.0 (2015-04-04)
 -------------------
 
 - Move custom GS import export adapters to external configuration
