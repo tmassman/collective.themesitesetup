@@ -1,56 +1,14 @@
 # -*- coding: utf-8 -*-
 from collective.themesitesetup.interfaces import DEFAULT_DISABLED_PROFILE_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
-from collective.themesitesetup.interfaces import NO
-from collective.themesitesetup.interfaces import YES
-from io import BytesIO
+from collective.themesitesetup.utils import createTarball
+from collective.themesitesetup.utils import getSettings
+from collective.themesitesetup.utils import isEnabled
 from plone import api
 from plone.app.theming.interfaces import IThemePlugin
 from plone.app.theming.interfaces import THEME_RESOURCE_NAME
 from plone.resource.utils import queryResourceDirectory
 from zope.interface import implements
-import tarfile
-
-
-# noinspection PyPep8Naming
-def populateTarball(tar, directory, prefix=''):
-    for name in directory.listDirectory():
-        if directory.isDirectory(name):
-            # Create sub-directory
-            info = tarfile.TarInfo(prefix + name)
-            info.type = tarfile.DIRTYPE
-            tar.addfile(info, BytesIO())
-
-            # Populate sub-directory
-            populateTarball(tar, directory[name], prefix + name + '/')
-        else:
-            data = directory.readFile(name)
-
-            # Fix dotted names filtered by resource directory API
-            if name.endswith('.dotfile'):
-                name = '.' + name[:-8]
-
-            info = tarfile.TarInfo(prefix + name)
-            info.size = len(data)
-            tar.addfile(info, BytesIO(data))
-
-
-# noinspection PyPep8Naming
-def createTarball(directory):
-    fb = BytesIO()
-    tar = tarfile.open(fileobj=fb, mode='w:gz')
-
-    # Recursively populate tarball
-    populateTarball(tar, directory)
-
-    tar.close()
-    return fb.getvalue()
-
-
-# noinspection PyPep8Naming
-def isEnabled(settings):
-    return ((settings.get('enabled') or '').lower() not in NO
-            and (settings.get('disabled') or '').lower() not in YES)
 
 
 # noinspection PyPep8Naming
@@ -78,11 +36,13 @@ class GenericSetupPlugin(object):
         pass
 
     def onEnabled(self, theme, settings, dependenciesSettings):
-        if not isEnabled(settings):
-            return
-
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
+            return
+
+        # We need to get settings by ourselves to avoid p.a.theming caching
+        settings = getSettings(res)
+        if not isEnabled(settings):
             return
 
         directoryName = DEFAULT_ENABLED_PROFILE_NAME
@@ -100,11 +60,13 @@ class GenericSetupPlugin(object):
                 None, purge_old=False, archive=tarball)
 
     def onDisabled(self, theme, settings, dependenciesSettings):
-        if not isEnabled(settings):
-            return
-
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
+            return
+
+        # We need to get settings by ourselves to avoid p.a.theming caching
+        settings = getSettings(res)
+        if not isEnabled(settings):
             return
 
         directoryName = DEFAULT_DISABLED_PROFILE_NAME
