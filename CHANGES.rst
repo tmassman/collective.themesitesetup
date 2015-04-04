@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.11.1 (unreleased)
+0.11.1 (2015-04-04)
 -------------------
 
 - Update README
