@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.11.0 (unreleased)
+0.11.0 (2015-04-04)
 -------------------
 
 - Add site setup import view to allow testing manual upgrading of site setups
