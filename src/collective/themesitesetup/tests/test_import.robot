@@ -43,7 +43,7 @@ I submit the import form
     Wait until page contains  Done
 
 I see a page imported from theme
-    Page should contain  Hello World
+    Page should contain  front-page
 
 *** Test cases ***
 

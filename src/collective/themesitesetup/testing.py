@@ -11,6 +11,9 @@ class CollectiveThemeSiteSetupLayer(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
+        import venusianconfiguration
+        venusianconfiguration.enable()
+
         import collective.themesitesetup
         import collective.themesitesetup.tests
         self.loadZCML(package=collective.themesitesetup)

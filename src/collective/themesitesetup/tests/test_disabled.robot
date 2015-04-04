@@ -36,7 +36,7 @@ I activate the imported theme
     Page should contain  Theme enabled
 
 I see a page imported from theme
-    Page should contain  Hello World
+    Page should contain  front-page
 
 I deactivate the imported theme
     Go to  ${PLONE_URL}/@@theming-controlpanel
@@ -47,7 +47,7 @@ I deactivate the imported theme
     Page should contain  Theme disabled
 
 I see the imported page being deleted
-    Page should not contain  Hello World
+    Page should not contain  front-page
 
 *** Test cases ***
 

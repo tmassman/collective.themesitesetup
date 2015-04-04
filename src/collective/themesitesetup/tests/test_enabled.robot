@@ -46,7 +46,7 @@ I activate the imported theme
     Page should contain  Theme enabled
 
 I see a page imported from theme
-    Page should contain  Hello World
+    Page should contain  front-page
 
 *** Test cases ***
 
