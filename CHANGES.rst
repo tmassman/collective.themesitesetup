@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.13.0 (unreleased)
+0.13.0 (2015-04-23)
 -------------------
 
 - Add support for exporting and importing plone.app.contenttypes -content
