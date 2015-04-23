@@ -1,10 +1,11 @@
 Changelog
 =========
 
-0.12.1 (unreleased)
+0.13.0 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add support for exporting and importing plone.app.contenttypes -content
+  [datakurre]
 
 
 0.12.0 (2015-04-04)

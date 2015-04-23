@@ -169,3 +169,48 @@ contents in ``portal_skins/custom``, you should add one marker for
 This is only required when exporting ZMI-only content. Importing ZMI-only
 content works according to normal structure import rules without these marker
 interfaces.
+
+
+About plone.app.contenttypes support
+------------------------------------
+
+`Better site structure export and import`_ described above must be enabled
+to support exporting and importing site structures with
+`plone.app.contenttypes`_ based content.
+
+In addition, `plone.app.textfield`_ ``>=1.2.5`` is recommended to fix issue,
+where structure import does not decode field value properly, causing 
+UnicodeDecodeErrors later.
+
+.. _plone.app.contenttypes: https://pypi.python.org/pypi/plone.app.contenttypes
+.. _plone.app.textfield: https://pypi.python.org/pypi/plone.app.textfield
+
+
+About custom Dexterity content support
+--------------------------------------
+
+Importing site structures with custom Dexterity content types require custom
+adapter to be implemented and registered for each content type
+
+.. python::
+
+   from Products.GenericSetup.interfaces import IContentFactory
+   from collective.themesitesetup.content import DexterityContentFactoryBase
+   from plone.dexterity.interfaces import IDexterityContent
+   from zope.component import adapter
+   from zope.interface import implementer
+
+   @adapter(IDexterityContent)
+   @implementer(IContentFactory)
+   class MyTypeFactory(DexterityContentFactoryBase):
+       portal_type = 'MyType'
+
+.. code:: xml
+
+   <adapter
+       factory=".adapters.MyTypeFactory"
+       name="MyType"
+       />
+
+This is not required when Dexterity content is only created into site root
+or Archetypes based container.
