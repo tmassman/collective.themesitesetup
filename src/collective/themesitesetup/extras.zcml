@@ -38,10 +38,52 @@
       for="OFS.interfaces.IFolder"
       />
 
-  <!--
   <adapter
       factory=".marshall.DictionaryFieldMarshaller"
       />
-  -->
+
+  <adapter
+      factory=".content.DexterityContentFactoryName"
+      />
+
+  <adapter
+      factory=".content.CollectionFactory"
+      name="Collection"
+      />
+
+  <adapter
+      factory=".content.DocumentFactory"
+      name="Document"
+      />
+
+  <adapter
+      factory=".content.FolderFactory"
+      name="Folder"
+      />
+
+  <adapter
+      factory=".content.LinkFactory"
+      name="Link"
+      />
+
+  <adapter
+      factory=".content.FileFactory"
+      name="File"
+      />
+
+  <adapter
+      factory=".content.ImageFactory"
+      name="Image"
+      />
+
+  <adapter
+      factory=".content.NewsItemFactory"
+      name="News Item"
+      />
+
+  <adapter
+      factory=".content.EventFactory"
+      name="Event"
+      />
 
 </configure>

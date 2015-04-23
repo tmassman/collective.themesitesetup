@@ -3,6 +3,7 @@ from ConfigParser import ConfigParser
 from Products.CMFCore.exportimport.content import StructureFolderWalkingAdapter
 from Products.CMFCore.exportimport.content import encode_if_needed
 from Products.GenericSetup.content import FolderishExporterImporter
+from Products.GenericSetup.interfaces import IContentFactory
 from Products.GenericSetup.interfaces import IContentFactoryName
 from Products.GenericSetup.interfaces import IFilesystemExporter
 from Products.GenericSetup.interfaces import IINIAware
@@ -10,6 +11,10 @@ from Products.GenericSetup.utils import _getDottedName
 from collective.themesitesetup.interfaces import IGenericSetupExportableContainer  # noqa
 from csv import writer
 from io import BytesIO
+from plone.dexterity.interfaces import IDexterityContent
+from plone.dexterity.utils import createContentInContainer
+from zope.component import adapter
+from zope.interface import implementer
 import Acquisition
 
 
@@ -56,7 +61,8 @@ class ManagedSiteRootExporterImporter(StructureFolderWalkingAdapter):
 
         exportable = self.listExportableItems()
 
-        for object_id, obj, adapter in exportable:
+        for object_id, obj, adapter_ in exportable:
+            # noinspection PyUnresolvedReferences
             if hasattr(Acquisition.aq_base(obj), 'getPortalTypeName'):
                 csv_writer.writerow((object_id, obj.getPortalTypeName()))
             else:
@@ -95,9 +101,85 @@ class ManagedSiteRootExporterImporter(StructureFolderWalkingAdapter):
                                      subdir=subdir,
                                      )
 
-        for object_id, obj, adapter in exportable:
-            if adapter is not None:
-                adapter.export(export_context, subdir)
+        for object_id, obj, adapter_ in exportable:
+            if adapter_ is not None:
+                adapter_.export(export_context, subdir)
 
         export_context.writeDataFile('.preserve', text='*',
                                      content_type='text/plain', subdir=subdir)
+
+
+# noinspection PyPep8Naming
+@adapter(IDexterityContent)
+@implementer(IContentFactoryName)
+class DexterityContentFactoryName(object):
+    def __init__(self, context):
+        self.context = context
+
+    def __call__(self):
+        return self.context.getPortalTypeName()
+
+
+class DexterityContentFactoryBase(object):
+    @property
+    def portal_type(self):
+        raise NotImplementedError
+
+    def __init__(self, context):
+        self.context = context
+
+    def __call__(self, id_):
+        return createContentInContainer(
+            self.context,
+            self.portal_type,
+            checkConstraints=False,
+            id=id_
+        )
+
+
+@adapter(IDexterityContent)
+@implementer(IContentFactory)
+class CollectionFactory(DexterityContentFactoryBase):
+    portal_type = 'Collection'
+
+
+@adapter(IDexterityContent)
+@implementer(IContentFactory)
+class DocumentFactory(DexterityContentFactoryBase):
+    portal_type = 'Document'
+
+
+@adapter(IDexterityContent)
+@implementer(IContentFactory)
+class FolderFactory(DexterityContentFactoryBase):
+    portal_type = 'Folder'
+
+
+@adapter(IDexterityContent)
+@implementer(IContentFactory)
+class LinkFactory(DexterityContentFactoryBase):
+    portal_type = 'Link'
+
+
+@adapter(IDexterityContent)
+@implementer(IContentFactory)
+class FileFactory(DexterityContentFactoryBase):
+    portal_type = 'File'
+
+
+@adapter(IDexterityContent)
+@implementer(IContentFactory)
+class ImageFactory(DexterityContentFactoryBase):
+    portal_type = 'Image'
+
+
+@adapter(IDexterityContent)
+@implementer(IContentFactory)
+class NewsItemFactory(DexterityContentFactoryBase):
+    portal_type = 'News Item'
+
+
+@adapter(IDexterityContent)
+@implementer(IContentFactory)
+class EventFactory(DexterityContentFactoryBase):
+    portal_type = 'Event'
