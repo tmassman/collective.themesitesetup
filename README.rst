@@ -192,7 +192,7 @@ About custom Dexterity content support
 Importing site structures with custom Dexterity content types require custom
 adapter to be implemented and registered for each content type
 
-.. python::
+.. code:: python
 
    from Products.GenericSetup.interfaces import IContentFactory
    from collective.themesitesetup.content import DexterityContentFactoryBase
