@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.0 (unreleased)
+1.0.0 (2016-08-11)
 ------------------
 
 - Add support for registering i18n message catalogs directly from theme
