@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.1 (unreleased)
+1.0.1 (2016-08-11)
 ------------------
 
 - Fix issue where translationdomain internals prevented updating existing
