@@ -1,11 +1,11 @@
 Changelog
 =========
 
-0.13.1 (unreleased)
--------------------
+1.0.0 (unreleased)
+------------------
 
-- Nothing changed yet.
-
+- Add support for registering i18n message catalogs directly from theme
+  [datakurre]
 
 0.13.0 (2015-04-23)
 -------------------
