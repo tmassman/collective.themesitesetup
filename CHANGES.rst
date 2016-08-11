@@ -4,8 +4,9 @@ Changelog
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fix issue where translationdomain internals prevented updating existing
+  catalog
+  [datakurre]
 
 1.0.0 (2016-08-11)
 ------------------
