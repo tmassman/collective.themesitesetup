@@ -70,6 +70,39 @@ This plugin can also be disabled at any time simply by adding the line
    disabled = true
 
 
+Message catalogs
+----------------
+
+This plugins can also be used to register (and unregister) i18n message
+catalogs directly from the theme. By default, the plugin looks for the message
+catalogs from ``locales`` subdirectory of the theme, expecting the usual
+message catalog directory structure:
+
+.. code::
+
+   ./locales/en/LC_MESSAGES/foo.po
+   ./locales/en/LC_MESSAGES/bar.po
+
+In the message above, two message catalogs, one for language ``en`` for domain
+``foo`` and another for language ``en`` for domain ``bar`` get registered.
+
+The default locales directory name can be changed with:
+
+.. code:: ini
+
+   [theme:genericsetup]
+   locales = my_locales
+
+The registered message catalogs are unregistered when the theme is deactivated.
+
+.. note::
+
+   The registered message catalogs use the persistent message catalog
+   classes from *zope.app.i18n*. The existence of these catalogs can
+   be confirmed from ZMI *Components*-tab from Plone site root by looking
+   for *translationdomain* utilities with themesitesetup in their names.
+
+
 Exporting the site setup
 ------------------------
 

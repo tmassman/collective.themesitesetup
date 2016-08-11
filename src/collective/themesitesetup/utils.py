@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-from ConfigParser import SafeConfigParser
 from collective.themesitesetup.interfaces import NO
 from collective.themesitesetup.interfaces import PLUGIN_NAME
 from collective.themesitesetup.interfaces import YES
+from ConfigParser import SafeConfigParser
 from io import BytesIO
 from plone.app.theming.interfaces import THEME_RESOURCE_NAME
 from plone.app.theming.plugins.utils import getPlugins
 from plone.resource.manifest import MANIFEST_FILENAME
+from polib import pofile
+from zope.app.i18n.messagecatalog import MessageCatalog
 import tarfile
 
 
@@ -97,3 +99,27 @@ def createTarball(directory):
 
     tar.close()
     return fb.getvalue()
+
+
+def getMessageCatalogs(locales):
+    catalogs = {}
+
+    # Parse message catalogs from the theme
+    for language in locales.listDirectory():
+        if not locales.isDirectory(language):
+            continue
+        directory = locales[language]
+        if not directory.isDirectory('LC_MESSAGES'):
+            continue
+        directory = directory['LC_MESSAGES']
+        for po in directory.listDirectory():
+            if not po.endswith('.po') or not directory.isFile(po):
+                continue
+            domain = po.split('.')[0]
+            catalogs.setdefault(domain, {})
+            catalogs[domain][language] = MessageCatalog(language, domain)
+            for msg in pofile(str(directory.readFile(po))):
+                catalogs[domain][language].setMessage(
+                    msg.msgid, unicode(msg.msgstr, 'utf-8', 'ignore'))
+
+    return catalogs
