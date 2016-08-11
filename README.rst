@@ -73,8 +73,8 @@ This plugin can also be disabled at any time simply by adding the line
 Message catalogs
 ----------------
 
-This plugins can also be used to register (and unregister) i18n message
-catalogs directly from the theme. By default, the plugin looks for the message
+This plugin can also be used to register (and unregister) i18n message
+catalogs directly from the theme. By default, the plugin looks for message
 catalogs from ``locales`` subdirectory of the theme, expecting the usual
 message catalog directory structure:
 
@@ -83,8 +83,8 @@ message catalog directory structure:
    ./locales/en/LC_MESSAGES/foo.po
    ./locales/en/LC_MESSAGES/bar.po
 
-In the message above, two message catalogs, one for language ``en`` for domain
-``foo`` and another for language ``en`` for domain ``bar`` get registered.
+In the above example, two message catalogs, one for language ``en`` for domain
+``foo`` and another for language ``en`` for domain ``bar`` are registered.
 
 The default locales directory name can be changed with:
 
