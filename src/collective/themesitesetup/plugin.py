@@ -88,7 +88,10 @@ class GenericSetupPlugin(object):
                     name = '.'.join(['collective.themesitesetup.catalog',
                                      res.__name__, domain, language])
                     if name in util:
-                        del util[name]
+                        try:
+                            del util[name]
+                        except ValueError:
+                            pass
                     util[name] = catalogs[domain][language]
 
     def onDisabled(self, theme, settings, dependenciesSettings):
@@ -129,7 +132,10 @@ class GenericSetupPlugin(object):
                         name = '.'.join(['collective.themesitesetup.catalog',
                                          res.__name__, domain, language])
                         if name in util:
-                            del util[name]
+                            try:
+                                del util[name]
+                            except ValueError:
+                                pass
                     name = str('collective.themesitesetup.domain.' + domain)
                     if name in sm.objectIds():
                         sm._delObject(name, suppress_events=True)
