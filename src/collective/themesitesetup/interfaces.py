@@ -6,6 +6,7 @@ PLUGIN_NAME = 'genericsetup'
 DEFAULT_ENABLED_PROFILE_NAME = 'install'
 DEFAULT_DISABLED_PROFILE_NAME = 'uninstall'
 DEFAULT_ENABLED_LOCALES_NAME = 'locales'
+DEFAULT_ENABLED_MODELS_NAME = 'models'
 
 NO = ['off', 'false', 'no', '0']
 YES = ['on', 'true', 'yes', '1']

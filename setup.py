@@ -29,6 +29,7 @@ setup(
         'plone.app.controlpanel',
         'plone.app.theming',
         'plone.autoform',
+        'plone.dexterity',
         'plone.supermodel',
         'plone.z3cform',
         'polib',
@@ -36,8 +37,10 @@ setup(
         'setuptools',
         'z3c.form',
         'zope.app.i18n',
+        'zope.event',
         'zope.i18n',
         'zope.schema',
+        'zope.lifecycleevent',
     ],
     extras_require={'test': [
         'plone.app.testing',

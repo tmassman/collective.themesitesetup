@@ -1,20 +1,30 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_base
-from zope.app.i18n.translationdomain import TranslationDomain
 from collective.themesitesetup.interfaces import DEFAULT_DISABLED_PROFILE_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_LOCALES_NAME
+from collective.themesitesetup.interfaces import DEFAULT_ENABLED_MODELS_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
 from collective.themesitesetup.utils import createTarball
 from collective.themesitesetup.utils import getMessageCatalogs
 from collective.themesitesetup.utils import getSettings
 from collective.themesitesetup.utils import isEnabled
+from collective.themesitesetup.utils import overrideModels
 from plone.app.theming.interfaces import IThemePlugin
 from plone.app.theming.interfaces import THEME_RESOURCE_NAME
+from plone.dexterity.fti import DexterityFTIModificationDescription
 from plone import api
 from plone.resource.utils import queryResourceDirectory
+from plone.supermodel import loadString
+from plone.supermodel.parser import SupermodelParseError
+from zope.app.i18n.translationdomain import TranslationDomain
 from zope.component import getSiteManager
+from zope.event import notify
 from zope.i18n import ITranslationDomain
 from zope.interface import implements
+from zope.lifecycleevent import ObjectModifiedEvent
+import logging
+
+logger = logging.getLogger('collective.themesitesetup')
 
 
 # noinspection PyPep8Naming
@@ -93,6 +103,43 @@ class GenericSetupPlugin(object):
                         except ValueError:
                             pass
                     util[name] = catalogs[domain][language]
+
+        modelsDirectoryName = DEFAULT_ENABLED_MODELS_NAME
+        if 'models' in settings:
+            modelsDirectoryName = settings['models']
+        override = overrideModels(settings)
+
+        if res.isDirectory(modelsDirectoryName):
+            types_tool = api.portal.get_tool('portal_types')
+            directory = res[modelsDirectoryName]
+            for name in directory.listDirectory():
+                if not name.endswith('.xml') or not directory.isFile(name):
+                    continue
+                fti = types_tool.get(name[:-4])
+                if not fti:
+                    continue
+                model = unicode(directory.readFile(name), 'utf-8', 'ignore')
+                if fti.model_source == model:
+                    continue
+                try:
+                    loadString(model, fti.schema_policy)  # fail for errors
+                except SupermodelParseError:
+                    logger.error(
+                        u'Error while parsing {0:s}/{1:s}/{2:s}'.format(
+                            res.__name__, modelsDirectoryName, name))
+                    raise
+                # Set model source when model is empty of override is enabled
+                desc = DexterityFTIModificationDescription('model_source',
+                                                           fti.model_source)
+                if not fti.model_source:
+                    fti.model_source = model
+                    notify(ObjectModifiedEvent(fti, desc))
+                elif not loadString(fti.model_source, fti.schema_policy).schema.names():  # noqa
+                    fti.model_source = model
+                    notify(ObjectModifiedEvent(fti, desc))
+                elif override:
+                    fti.model_source = model
+                    notify(ObjectModifiedEvent(fti, desc))
 
     def onDisabled(self, theme, settings, dependenciesSettings):
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)

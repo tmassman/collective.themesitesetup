@@ -62,8 +62,13 @@ def getSettings(themeDirectory):
 
 # noinspection PyPep8Naming
 def isEnabled(settings):
-    return ((settings.get('enabled') or '').lower() not in NO
-            and (settings.get('disabled') or '').lower() not in YES)
+    return ((settings.get('enabled') or '').lower() not in NO and
+            (settings.get('disabled') or '').lower() not in YES)
+
+
+# noinspection PyPep8Naming
+def overrideModels(settings):
+    return (settings.get('models-override') or '').lower() in YES
 
 
 # noinspection PyPep8Naming

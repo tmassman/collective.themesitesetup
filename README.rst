@@ -70,12 +70,41 @@ This plugin can also be disabled at any time simply by adding the line
    disabled = true
 
 
+Dexterity models
+----------------
+
+A usual use for this plugin is to ship a theme with pre-configured Dexterity
+content types. Unfortunately, describing a Dexterity XML schema in type
+description inline in type description XML is inconvenient (because the schema
+must be escaped) and Dexterity only supports reading separate XML model
+files from filesystem and filesystem Python packages. Fortunately, this
+plugin allows populating existing Dexterity content types (and also the
+ones installed with this plugin) with a matching model XML from the theme.
+
+By default, the plugin loads model files from ``models``-subdirectory of the
+them. Models must have matching filename with the content type id (with
+``.xml`` extension). The default import directory can be changed with:
+
+.. code:: ini
+
+   [theme:genericsetup]
+   models = my_models
+
+The plugin does not override existing models by default (unless they seem
+empty), but this can be changed (e.g. for development purposes) with:
+
+.. code:: ini
+
+   [theme:genericsetup]
+   models-override = true
+
+
 Message catalogs
 ----------------
 
 This plugin can also be used to register (and unregister) i18n message
 catalogs directly from the theme. By default, the plugin looks for message
-catalogs from ``locales`` subdirectory of the theme, expecting the usual
+catalogs from ``locales``-subdirectory of the theme, expecting the usual
 message catalog directory structure:
 
 .. code::
@@ -212,7 +241,7 @@ to support exporting and importing site structures with
 `plone.app.contenttypes`_ based content.
 
 In addition, `plone.app.textfield`_ ``>=1.2.5`` is recommended to fix issue,
-where structure import does not decode field value properly, causing 
+where structure import does not decode field value properly, causing
 UnicodeDecodeErrors later.
 
 .. _plone.app.contenttypes: https://pypi.python.org/pypi/plone.app.contenttypes
