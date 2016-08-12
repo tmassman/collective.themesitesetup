@@ -1,11 +1,12 @@
 Changelog
 =========
 
-1.0.2 (unreleased)
+1.1.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Add support for populating Dexterity content type models from theme
+  from ``./models/Xxxxxx.xml``
+  [datakurre]
 
 1.0.1 (2016-08-11)
 ------------------
@@ -18,6 +19,7 @@ Changelog
 ------------------
 
 - Add support for registering i18n message catalogs directly from theme
+  from ``./locales/xx/LC_MESSAGES/yyyyy.po``
   [datakurre]
 
 0.13.0 (2015-04-23)
