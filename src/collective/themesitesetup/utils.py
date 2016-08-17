@@ -106,6 +106,18 @@ def createTarball(directory):
     return fb.getvalue()
 
 
+def getPermissions(settings):
+    if 'permissions' in settings:
+        return dict(
+            [tuple([part.strip() for part in permission.split(' ', 1)])
+             for permission in
+             filter(bool, settings['permissions'].split('\n'))
+             if not permission.strip().startswith('#')]
+        )
+    else:
+        return {}
+
+
 def getMessageCatalogs(locales):
     catalogs = {}
 

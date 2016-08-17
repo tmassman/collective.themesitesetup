@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_base
+from AccessControl.Permission import addPermission
+from zope.security.permission import Permission
+from zope.security.interfaces import IPermission
 from collective.themesitesetup.interfaces import DEFAULT_DISABLED_PROFILE_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_LOCALES_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_MODELS_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
 from collective.themesitesetup.utils import createTarball
 from collective.themesitesetup.utils import getMessageCatalogs
+from collective.themesitesetup.utils import getPermissions
 from collective.themesitesetup.utils import getSettings
 from collective.themesitesetup.utils import isEnabled
 from collective.themesitesetup.utils import overrideModels
@@ -61,6 +65,17 @@ class GenericSetupPlugin(object):
         if not isEnabled(settings):
             return
 
+        # Register permissions
+        sm = getSiteManager()
+        for key, value in getPermissions(settings).items():
+            util = sm.queryUtility(IPermission, name=key)
+            if util is None:
+                permission = Permission(key, value, u'')
+                sm.registerUtility(
+                    permission, provided=IPermission, name=key)
+                addPermission(str(value))
+
+        # Import GS profile
         directoryName = DEFAULT_ENABLED_PROFILE_NAME
         if 'install' in settings:
             directoryName = settings['install']
@@ -75,13 +90,13 @@ class GenericSetupPlugin(object):
             portal_setup.runAllImportStepsFromProfile(
                 None, purge_old=False, archive=tarball)
 
+        # Register locales
         localesDirectoryName = DEFAULT_ENABLED_LOCALES_NAME
         if 'locales' in settings:
             localesDirectoryName = settings['locales']
 
         if res.isDirectory(localesDirectoryName):
             catalogs = getMessageCatalogs(res[localesDirectoryName])
-            sm = getSiteManager()
             for domain in catalogs:
                 util = sm.queryUtility(ITranslationDomain, name=domain)
                 if not isinstance(util, TranslationDomain):
@@ -104,6 +119,7 @@ class GenericSetupPlugin(object):
                             pass
                     util[name] = catalogs[domain][language]
 
+        # Update Dexterity models
         modelsDirectoryName = DEFAULT_ENABLED_MODELS_NAME
         if 'models' in settings:
             modelsDirectoryName = settings['models']
@@ -155,6 +171,7 @@ class GenericSetupPlugin(object):
         if 'uninstall' in settings:
             directoryName = settings['uninstall']
 
+        # Import GS (uninstall) profile
         directory = None
         if res.isDirectory(directoryName):
             directory = res[directoryName]
@@ -165,13 +182,23 @@ class GenericSetupPlugin(object):
             portal_setup.runAllImportStepsFromProfile(
                 None, purge_old=False, archive=tarball)
 
+        # Unregister permissions
+        sm = getSiteManager()
+        for key, value in getPermissions(settings).items():
+            util = sm.queryUtility(IPermission, name=key)
+            if isinstance(util, Permission):
+                util = sm._utility_registrations.get((IPermission, key))[0]
+                sm.unregisterUtility(
+                    util, provided=IPermission, name=key)
+                sm.utilities.unsubscribe((), IPermission, util)
+
+        # Unregister locales
         localesDirectoryName = DEFAULT_ENABLED_LOCALES_NAME
         if 'locales' in settings:
             localesDirectoryName = settings['locales']
 
         if res.isDirectory(localesDirectoryName):
             catalogs = getMessageCatalogs(res[localesDirectoryName])
-            sm = getSiteManager()
             for domain in catalogs:
                 util = sm.queryUtility(ITranslationDomain, name=domain)
                 if isinstance(util, TranslationDomain):
@@ -186,8 +213,10 @@ class GenericSetupPlugin(object):
                     name = str('collective.themesitesetup.domain.' + domain)
                     if name in sm.objectIds():
                         sm._delObject(name, suppress_events=True)
-                        sm.unregisterUtility(
-                            util, provided=ITranslationDomain, name=domain)
+                    sm.unregisterUtility(
+                        util, provided=ITranslationDomain, name=domain)
 
     def onRequest(self, request, theme, settings, dependenciesSettings):
-        pass
+        # Ensure that TTW permissions are registered also as Zope 2 permissions
+        for permission in getPermissions(settings).values():
+            addPermission(permission)

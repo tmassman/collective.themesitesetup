@@ -132,6 +132,44 @@ The registered message catalogs are unregistered when the theme is deactivated.
    for *translationdomain* utilities with themesitesetup in their names.
 
 
+Permissions
+-----------
+
+This plugin has also experimental support for TTW custom permissions, which
+are useful for more complex content management scenarios involving Dexterity
+content types and workflows. New permissions are registered before the
+GenericSetup profile get imported, to make to new permission to be available
+during import.
+
+Custom permissions are listed in theme's ``manifest.cfg`` in *id Title* format
+as follow:
+
+.. code:: ini
+
+   [theme:genericsetup]
+   permissions
+       mydomain.addMyProduct    MyDomain: Add My Product
+       mydomain.removeMyProduct MyDomain: Remove My Product
+
+Custom permissions are removed when theme is disabled. Yet, they disappear
+from ZMI only when the site is restarted.
+
+.. note::
+
+   The registered persisten permissions use the default Permission class from
+   *zope.security.permission*, which is not meant to persisted, but works until
+   it gets cleaned properly on uninstall. Yet, because it's always present with
+   Plone, there is no danger of missing class errors if themesitesetup is
+   removed. In addition, permissions must be registered for Zope 2 in a
+   non-persistent way, which requires restart to remove permissions from ZMI
+   screens.
+
+   The existence of these permissions can be confirmed from ZMI
+   *Components*-tab from Plone site root by looking for *Permission* utilities,
+   on ZMI security tab and e.g. in the options for Add permission in ZMI portal
+   type factory information pages.
+
+
 Exporting the site setup
 ------------------------
 
