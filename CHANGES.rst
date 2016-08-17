@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.0 (unreleased)
+1.2.0 (2016-08-17)
 ------------------
 
 - Add support for TTW custom permissions
