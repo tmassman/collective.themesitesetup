@@ -1,11 +1,11 @@
 Changelog
 =========
 
-1.1.1 (unreleased)
+1.2.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Add support for TTW custom permissions
+  [Asko Soukka]
 
 1.1.0 (2016-08-12)
 ------------------
