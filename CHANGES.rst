@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.1 (unreleased)
+1.2.1 (2016-09-01)
 ------------------
 
 - Fix issue where message catalog support allowed (mostly accidentally)
