@@ -43,8 +43,8 @@ class ManagedSiteRootExporterImporter(StructureFolderWalkingAdapter):
         ids = self.context.contentIds()
         exportable = self.context.objectItems()
         exportable = [(id_, obj) for id_, obj in exportable
-                      if (id_ in ids
-                          or IGenericSetupExportableContainer.providedBy(obj))]
+                      if (id_ in ids or
+                          IGenericSetupExportableContainer.providedBy(obj))]
         exportable = [x + (IFilesystemExporter(x[1], None),)
                       for x in exportable]
         exportable = [x for x in exportable if x[2] is not None]

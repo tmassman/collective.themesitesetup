@@ -136,6 +136,8 @@ def getMessageCatalogs(locales):
             catalogs.setdefault(domain, {})
             catalogs[domain][language] = MessageCatalog(language, domain)
             for msg in pofile(str(directory.readFile(po))):
+                if not msg.msgstr:
+                    continue  # Disallows overrides with empty strings
                 catalogs[domain][language].setMessage(
                     msg.msgid, unicode(msg.msgstr, 'utf-8', 'ignore'))
 

@@ -4,14 +4,16 @@ Changelog
 1.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fix issue where message catalog support allowed (mostly accidentally)
+  overriding messages with empty strings. Messages with empty strings are
+  now ignored.
+  [datakurre]
 
 1.2.0 (2016-08-17)
 ------------------
 
 - Add support for TTW custom permissions
-  [Asko Soukka]
+  [datakurre]
 
 1.1.0 (2016-08-12)
 ------------------

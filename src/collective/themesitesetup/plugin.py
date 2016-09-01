@@ -55,7 +55,7 @@ class GenericSetupPlugin(object):
     def onCreated(self, theme, settings, dependenciesSettings):
         pass
 
-    def onEnabled(self, theme, settings, dependenciesSettings):
+    def onEnabled(self, theme, settings, dependenciesSettings):  # noqa
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
             return
@@ -157,7 +157,7 @@ class GenericSetupPlugin(object):
                     fti.model_source = model
                     notify(ObjectModifiedEvent(fti, desc))
 
-    def onDisabled(self, theme, settings, dependenciesSettings):
+    def onDisabled(self, theme, settings, dependenciesSettings):  # noqa
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
             return
