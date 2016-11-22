@@ -147,7 +147,7 @@ as follow:
 .. code:: ini
 
    [theme:genericsetup]
-   permissions
+   permissions =
        mydomain.addMyProduct    MyDomain: Add My Product
        mydomain.removeMyProduct MyDomain: Remove My Product
 
