@@ -1,17 +1,19 @@
 Changelog
 =========
 
-1.2.1 (unreleased)
+1.3.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Refactor theme based permissions to base onzope.app.localpermission
+  (permissions installed with previous versions still continue to uninstall
+  properly)
+  [datakurre]
 
 1.2.0 (2016-08-17)
 ------------------
 
 - Add support for TTW custom permissions
-  [Asko Soukka]
+  [datakurre]
 
 1.1.0 (2016-08-12)
 ------------------
