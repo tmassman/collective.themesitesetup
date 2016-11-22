@@ -4,9 +4,9 @@ Changelog
 1.3.0 (unreleased)
 ------------------
 
-- Refactor theme based permissions to base onzope.app.localpermission
-  (permissions installed with previous versions still continue to uninstall
-  properly)
+- Add support for populating persistent (plone.resource) resource directories
+  [datakurre]
+- Refactor permission support to use zope.app.localpermission
   [datakurre]
 
 1.2.0 (2016-08-17)
