@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from AccessControl.Permission import addPermission
+from zope.app.localpermission import LocalPermission
 from zope.security.permission import Permission
 from zope.security.interfaces import IPermission
 from collective.themesitesetup.interfaces import DEFAULT_DISABLED_PROFILE_NAME
@@ -55,6 +56,7 @@ class GenericSetupPlugin(object):
     def onCreated(self, theme, settings, dependenciesSettings):
         pass
 
+    # noinspection PyProtectedMember
     def onEnabled(self, theme, settings, dependenciesSettings):
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
@@ -70,9 +72,15 @@ class GenericSetupPlugin(object):
         for key, value in getPermissions(settings).items():
             util = sm.queryUtility(IPermission, name=key)
             if util is None:
-                permission = Permission(key, value, u'')
+                name = str('collective.themesitesetup.permission.' + key)
+                util = LocalPermission(value, u'')
+                util.id = key
+                util.__name__ = name
+                util.__parent__ = aq_base(sm)
+                sm._setObject(
+                    name, util, set_owner=False, suppress_events=True)
                 sm.registerUtility(
-                    permission, provided=IPermission, name=key)
+                    util, provided=IPermission, name=key)
                 addPermission(str(value))
 
         # Import GS profile
@@ -186,7 +194,13 @@ class GenericSetupPlugin(object):
         sm = getSiteManager()
         for key, value in getPermissions(settings).items():
             util = sm.queryUtility(IPermission, name=key)
-            if isinstance(util, Permission):
+            if isinstance(util, Permission) or isinstance(util, LocalPermission):  # noqa
+                name = str('collective.themesitesetup.permission.' + key)
+                if name in sm.objectIds():
+                    sm._delObject(name, suppress_events=True)
+                # Note: The following lines may look weird, but exist because
+                # we used to use transient Persistent class and these were the
+                # lines, which properly unregistered those.
                 util = sm._utility_registrations.get((IPermission, key))[0]
                 sm.unregisterUtility(
                     util, provided=IPermission, name=key)

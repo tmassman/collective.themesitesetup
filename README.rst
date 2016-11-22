@@ -156,13 +156,15 @@ from ZMI only when the site is restarted.
 
 .. note::
 
-   The registered persisten permissions use the default Permission class from
-   *zope.security.permission*, which is not meant to persisted, but works until
-   it gets cleaned properly on uninstall. Yet, because it's always present with
-   Plone, there is no danger of missing class errors if themesitesetup is
-   removed. In addition, permissions must be registered for Zope 2 in a
-   non-persistent way, which requires restart to remove permissions from ZMI
-   screens.
+   The registered persistent permissions use and depend on LocalPermission
+   class from *zope.app.localpermission*. If this package is removed without
+   uninstalling theme with permisions at first, *zope.app.localpermission*
+   must exit to prevent possible errors caused by missing object class.
+
+   In addition, permissions must be registered for Zope 2 in a non-persistent
+   way, which requires restart to remove permissions from ZMI screens.
+   Because of this, even installed permissions continue to work only as long
+   as this package is available.
 
    The existence of these permissions can be confirmed from ZMI
    *Components*-tab from Plone site root by looking for *Permission* utilities,

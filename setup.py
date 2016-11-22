@@ -37,6 +37,7 @@ setup(
         'setuptools',
         'z3c.form',
         'zope.app.i18n',
+        'zope.app.localpermission',
         'zope.event',
         'zope.i18n',
         'zope.schema',
