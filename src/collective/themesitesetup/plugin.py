@@ -1,32 +1,38 @@
 # -*- coding: utf-8 -*-
-from Acquisition import aq_base
 from AccessControl.Permission import addPermission
-from zope.app.localpermission import LocalPermission
-from zope.security.permission import Permission
-from zope.security.interfaces import IPermission
+from Acquisition import aq_base
 from collective.themesitesetup.interfaces import DEFAULT_DISABLED_PROFILE_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_LOCALES_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_MODELS_NAME
 from collective.themesitesetup.interfaces import DEFAULT_ENABLED_PROFILE_NAME
+from collective.themesitesetup.interfaces import DEFAULT_ENABLED_RESOURCES_NAME
 from collective.themesitesetup.utils import createTarball
 from collective.themesitesetup.utils import getMessageCatalogs
 from collective.themesitesetup.utils import getPermissions
 from collective.themesitesetup.utils import getSettings
 from collective.themesitesetup.utils import isEnabled
-from collective.themesitesetup.utils import overrideModels
+from collective.themesitesetup.utils import overwriteModels
+from collective.themesitesetup.utils import overwriteResources
+from collective.themesitesetup.utils import purgeResources
+from collective.themesitesetup.utils import copyResources
 from plone.app.theming.interfaces import IThemePlugin
 from plone.app.theming.interfaces import THEME_RESOURCE_NAME
 from plone.dexterity.fti import DexterityFTIModificationDescription
 from plone import api
+from plone.resource.interfaces import IResourceDirectory
 from plone.resource.utils import queryResourceDirectory
 from plone.supermodel import loadString
 from plone.supermodel.parser import SupermodelParseError
 from zope.app.i18n.translationdomain import TranslationDomain
+from zope.app.localpermission import LocalPermission
 from zope.component import getSiteManager
+from zope.component import queryUtility
 from zope.event import notify
 from zope.i18n import ITranslationDomain
 from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
+from zope.security.interfaces import IPermission
+from zope.security.permission import Permission
 import logging
 
 logger = logging.getLogger('collective.themesitesetup')
@@ -131,7 +137,7 @@ class GenericSetupPlugin(object):
         modelsDirectoryName = DEFAULT_ENABLED_MODELS_NAME
         if 'models' in settings:
             modelsDirectoryName = settings['models']
-        override = overrideModels(settings)
+        overwrite = overwriteModels(settings)
 
         if res.isDirectory(modelsDirectoryName):
             types_tool = api.portal.get_tool('portal_types')
@@ -161,9 +167,19 @@ class GenericSetupPlugin(object):
                 elif not loadString(fti.model_source, fti.schema_policy).schema.names():  # noqa
                     fti.model_source = model
                     notify(ObjectModifiedEvent(fti, desc))
-                elif override:
+                elif overwrite:
                     fti.model_source = model
                     notify(ObjectModifiedEvent(fti, desc))
+
+        # Copy resources
+        resourcesDirectoryName = DEFAULT_ENABLED_RESOURCES_NAME
+        if 'resources' in settings:
+            resourcesDirectoryName = settings['resources']
+        purge = purgeResources(settings)
+        overwrite = overwriteResources(settings)
+        root = queryUtility(IResourceDirectory, name=u'persistent')
+        if root and res.isDirectory(resourcesDirectoryName):
+            copyResources(res[resourcesDirectoryName], root, purge, overwrite)
 
     def onDisabled(self, theme, settings, dependenciesSettings):
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)

@@ -90,13 +90,13 @@ them. Models must have matching filename with the content type id (with
    [theme:genericsetup]
    models = my_models
 
-The plugin does not override existing models by default (unless they seem
+The plugin does not overwrite existing models by default (unless they seem
 empty), but this can be changed (e.g. for development purposes) with:
 
 .. code:: ini
 
    [theme:genericsetup]
-   models-override = true
+   models-overwrite = true
 
 
 Message catalogs
@@ -130,6 +130,60 @@ The registered message catalogs are unregistered when the theme is deactivated.
    classes from *zope.app.i18n*. The existence of these catalogs can
    be confirmed from ZMI *Components*-tab from Plone site root by looking
    for *translationdomain* utilities with themesitesetup in their names.
+
+
+Mosaic layouts (and other resources)
+------------------------------------
+
+This plugin can also be used to populate also other persistent resource
+directories than theme directories. For example, with this plugin, your theme
+could contain site and content layouts for Plone Mosaic. Layouts are copied
+from theme into their own resource directory namespaces when theme is activated
+(or updated). One layouts are copied, they are not removed, unless this plugin
+is configured to purge those directories.
+
+For example, theme containing single site layout and content layout, could
+contain the following file structure:
+
+.. code::
+
+   ./resources/sitelayout/manifest.cfg
+   ./resources/sitelayout/layout.html
+   ./resources/contentlayout/manifest.cfg
+   ./resources/contentlayout/layout.html
+
+The default resources directory name can be from ``resources`` to e.g.
+``designs`` with:
+
+.. code:: ini
+
+   [theme:genericsetup]
+   resources = design
+
+By default, this plugin never overwrites existing resources unless its
+configuration option ``resources-overwrite`` is enabled:
+
+.. code:: ini
+
+   [theme:genericsetup]
+   resources-overwrite = true
+
+In addition, this plugin can be configured to purge existing directories
+before copying with:
+
+.. code:: ini
+
+   [theme:genericsetup]
+   resources-purge= true
+
+Although, the plugin will still never remove top-level resources directories
+(like ``theme``, ``sitelayout`` or ``contentlayout``).
+
+.. note::
+
+   Technically resources are simply copied into ``portal_resources`` and they
+   can be manually removed via ZMI. Please, note that changes made in theme
+   editor are not copied unless theme has been re-activated (or updated).
 
 
 Permissions
