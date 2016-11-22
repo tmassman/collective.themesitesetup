@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.0 (unreleased)
+1.3.0 (2016-11-22)
 ------------------
 
 - Add support for populating persistent (plone.resource) resource directories
