@@ -180,6 +180,9 @@ class GenericSetupPlugin(object):
         root = queryUtility(IResourceDirectory, name=u'persistent')
         if root and res.isDirectory(resourcesDirectoryName):
             copyResources(res[resourcesDirectoryName], root, purge, overwrite)
+            # Invalidate site layout cache of plone.app.blocks
+            portal_catalog = api.portal.get_tool('portal_catalog')
+            portal_catalog._increment_counter()
 
     def onDisabled(self, theme, settings, dependenciesSettings):
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
