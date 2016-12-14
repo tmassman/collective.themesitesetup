@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.1 (unreleased)
+1.3.1 (2016-12-14)
 ------------------
 
 - Add to purge plone.app.blocks' site layout cache after resource directory
