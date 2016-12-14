@@ -1,3 +1,5 @@
-recursive-include src *
+graft src/collective
+graft docs
 include *.rst *.py
 global-exclude *.pyc
+exclude *.cfg
