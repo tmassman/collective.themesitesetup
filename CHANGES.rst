@@ -4,8 +4,9 @@ Changelog
 1.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Add to purge plone.app.blocks' site layout cache after resource directory
+  copy
+  [datakurre]
 
 1.3.0 (2016-11-22)
 ------------------
