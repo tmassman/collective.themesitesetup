@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='collective.themesitesetup',
-    version='1.2.2.dev0',
+    version='1.3.2.dev0',
     description='GenericSetup profiles for plone.app.theming',
     long_description=(open('README.rst').read() + '\n' +
                       open('CHANGES.rst').read()),
@@ -37,6 +37,7 @@ setup(
         'setuptools',
         'z3c.form',
         'zope.app.i18n',
+        'zope.app.localpermission',
         'zope.event',
         'zope.i18n',
         'zope.schema',

@@ -67,8 +67,19 @@ def isEnabled(settings):
 
 
 # noinspection PyPep8Naming
-def overrideModels(settings):
-    return (settings.get('models-override') or '').lower() in YES
+def overwriteModels(settings):
+    return ((settings.get('models-overwrite') or '').lower() in YES or
+            (settings.get('models-override') or '').lower() in YES)
+
+
+# noinspection PyPep8Naming
+def purgeResources(settings):
+    return (settings.get('resources-purge') or '').lower() in YES
+
+
+# noinspection PyPep8Naming
+def overwriteResources(settings):
+    return (settings.get('resources-overwrite') or '').lower() in YES
 
 
 # noinspection PyPep8Naming
@@ -142,3 +153,19 @@ def getMessageCatalogs(locales):
                     msg.msgid, unicode(msg.msgstr, 'utf-8', 'ignore'))
 
     return catalogs
+
+
+def copyResources(source, destination, purge=False, overwrite=False, depth=0):
+    for name in source.listDirectory():
+        if purge and name in destination and depth > 0:
+            del destination[name]
+        if source.isDirectory(name):
+            destination.makeDirectory(name)
+            copyResources(source[name], destination[name],
+                          purge, overwrite, depth + 1)
+        elif overwrite or name not in destination:
+            if destination.isDirectory(name):
+                del destination[name]
+            fp = source.openFile(name)
+            destination.writeFile(name, fp)
+            fp.close()
