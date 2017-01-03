@@ -170,7 +170,6 @@ class GenericSetupPlugin(object):
                     fti.model_source = model
                     notify(ObjectModifiedEvent(fti, desc))
 
-    def onDisabled(self, theme, settings, dependenciesSettings):  # noqa
         # Copy resources
         resourcesDirectoryName = DEFAULT_ENABLED_RESOURCES_NAME
         if 'resources' in settings:
@@ -184,6 +183,7 @@ class GenericSetupPlugin(object):
             portal_catalog = api.portal.get_tool('portal_catalog')
             portal_catalog._increment_counter()
 
+    def onDisabled(self, theme, settings, dependenciesSettings):  # noqa
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
             return
