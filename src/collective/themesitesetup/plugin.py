@@ -62,8 +62,7 @@ class GenericSetupPlugin(object):
     def onCreated(self, theme, settings, dependenciesSettings):
         pass
 
-    # noinspection PyProtectedMember
-    def onEnabled(self, theme, settings, dependenciesSettings):
+    def onEnabled(self, theme, settings, dependenciesSettings):  # noqa
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
             return
@@ -184,7 +183,7 @@ class GenericSetupPlugin(object):
             portal_catalog = api.portal.get_tool('portal_catalog')
             portal_catalog._increment_counter()
 
-    def onDisabled(self, theme, settings, dependenciesSettings):
+    def onDisabled(self, theme, settings, dependenciesSettings):  # noqa
         res = queryResourceDirectory(THEME_RESOURCE_NAME, theme)
         if res is None:
             return

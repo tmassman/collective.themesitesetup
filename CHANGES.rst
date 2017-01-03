@@ -1,10 +1,19 @@
 Changelog
 =========
 
-1.3.2 (unreleased)
+1.3.3 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+1.3.2 (2017-01-03)
+------------------
+
+- Fix issue where message catalog support allowed (mostly accidentally)
+  overriding messages with empty strings. Messages with empty strings are
+  now ignored.
+  [datakurre]
 
 
 1.3.1 (2016-12-14)
@@ -14,19 +23,23 @@ Changelog
   copy
   [datakurre]
 
+
 1.3.0 (2016-11-22)
 ------------------
 
 - Add support for populating persistent (plone.resource) resource directories
   [datakurre]
+
 - Refactor permission support to use zope.app.localpermission
   [datakurre]
+
 
 1.2.0 (2016-08-17)
 ------------------
 
 - Add support for TTW custom permissions
   [datakurre]
+
 
 1.1.0 (2016-08-12)
 ------------------
@@ -35,6 +48,7 @@ Changelog
   from ``./models/Xxxxxx.xml``
   [datakurre]
 
+
 1.0.1 (2016-08-11)
 ------------------
 
@@ -42,12 +56,14 @@ Changelog
   catalog
   [datakurre]
 
+
 1.0.0 (2016-08-11)
 ------------------
 
 - Add support for registering i18n message catalogs directly from theme
   from ``./locales/xx/LC_MESSAGES/yyyyy.po``
   [datakurre]
+
 
 0.13.0 (2015-04-23)
 -------------------
@@ -61,8 +77,10 @@ Changelog
 
 - Move custom GS import export adapters to external configuration
   [datakurre]
+
 - Fix to register setup forms for p.a.theming layer
   [datakurre]
+
 
 0.11.1 (2015-04-04)
 -------------------
@@ -70,15 +88,18 @@ Changelog
 - Update README
   [datakurre]
 
+
 0.11.0 (2015-04-04)
 -------------------
 
 - Add site setup import view to allow testing or manual upgrading of site
   setups
   [datakurre]
+
 - Add option to disable setup steps import via plugin configuration variable in
   theme manifest (either with ``enabled = false`` or ``disabled = true``)
   [datakurre]
+
 
 0.10.0 (2015-04-03)
 -------------------
@@ -91,6 +112,7 @@ Changelog
 - Add GS content export/import to support non-CMF-containers, PythonScripts
   and PageTemplates.
   [datakurre]
+
 
 0.9.0 (2015-04-01)
 ------------------

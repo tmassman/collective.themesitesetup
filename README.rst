@@ -17,15 +17,6 @@ See it activating theme site setup at: https://youtu.be/3vkrc7JFUU0
 .. _plone.app.theming: https://pypi.python.org/pypi/plone.app.theming
 .. _GenericSetup: https://pypi.python.org/pypi/Products.GenericSetup
 
-**Note:** Due to regression in the plugin support in `plone.app.theming`_, the
-automatic import of setup steps require a currently (as of 2015-04-04)
-unreleased version with one of the fixing pull requests merged (1__, 2__,
-3__).
-
-__ https://github.com/plone/plone.app.theming/pull/38
-__ https://github.com/plone/plone.app.theming/pull/39
-__ https://github.com/plone/plone.app.theming/pull/40
-
 
 Installation
 ------------
