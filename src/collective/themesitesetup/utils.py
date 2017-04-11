@@ -159,10 +159,6 @@ def getPermissions(settings):
             parts = s.split(' ', 1)
             return parts[0].strip(), parts[1].strip()
 
-        print dict([split(permission) for permission in
-                     filter(bool, settings['permissions'].split('\n'))
-                     if not permission.strip().startswith('#')])
-
         return dict([split(permission) for permission in
                      filter(bool, settings['permissions'].split('\n'))
                      if not permission.strip().startswith('#')])
