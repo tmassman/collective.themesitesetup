@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.3 (unreleased)
+1.4.0 (2017-04-11)
 ------------------
 
 - Patch TTW message catalogs to support plonejs18n view (translate-pattern),
