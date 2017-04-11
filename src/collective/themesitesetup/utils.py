@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from App.config import getConfiguration
 from collective.themesitesetup.interfaces import NO
 from collective.themesitesetup.interfaces import PLUGIN_NAME
 from collective.themesitesetup.interfaces import YES
@@ -9,7 +10,40 @@ from plone.app.theming.plugins.utils import getPlugins
 from plone.resource.manifest import MANIFEST_FILENAME
 from polib import pofile
 from zope.app.i18n.messagecatalog import MessageCatalog
+from zope.globalrequest import getRequest
 import tarfile
+
+try:
+    from plone.app.theming.interfaces import IThemingPolicy
+    CACHE = True
+except ImportError:
+    CACHE = False
+
+
+def cache(key):
+    def wrapper(func):
+        def cached(*args, **kwargs):
+            if not CACHE or getConfiguration().debug_mode:
+                return func(*args, **kwargs)
+
+            request = getRequest()
+            policy = IThemingPolicy(request)
+            cache_ = policy.getCache()
+            if not hasattr(cache_, 'collective.themesitesetup'):
+                setattr(cache_, 'collective.themesitesetup', {})
+            cache_ = getattr(cache_, 'collective.themesitesetup')
+
+            if callable(key):
+                key_ = key(*args)
+            else:
+                key_ = key
+
+            if key_ not in cache_:
+                cache_[key_] = func(*args, **kwargs)
+            return cache_[key_]
+
+        return cached
+    return wrapper
 
 
 # This is copied from p.a.theming.plugins.utils to get uncached data
@@ -117,14 +151,21 @@ def createTarball(directory):
     return fb.getvalue()
 
 
+@cache('permissions')
 def getPermissions(settings):
     if 'permissions' in settings:
-        return dict(
-            [tuple([part.strip() for part in permission.split(' ', 1)])
-             for permission in
-             filter(bool, settings['permissions'].split('\n'))
-             if not permission.strip().startswith('#')]
-        )
+
+        def split(s):
+            parts = s.split(' ', 1)
+            return parts[0].strip(), parts[1].strip()
+
+        print dict([split(permission) for permission in
+                     filter(bool, settings['permissions'].split('\n'))
+                     if not permission.strip().startswith('#')])
+
+        return dict([split(permission) for permission in
+                     filter(bool, settings['permissions'].split('\n'))
+                     if not permission.strip().startswith('#')])
     else:
         return {}
 
@@ -169,3 +210,13 @@ def copyResources(source, destination, purge=False, overwrite=False, depth=0):
             fp = source.openFile(name)
             destination.writeFile(name, fp)
             fp.close()
+
+
+class CatalogMessages(object):
+    def __init__(self, catalog):
+        self._catalog = dict([(msg['msgid'], msg['msgstr']) for msg in
+                              catalog.getMessages()])
+
+
+_data = property(lambda self: self)
+_catalog = property(lambda self: CatalogMessages(self))

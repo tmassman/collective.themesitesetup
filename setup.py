@@ -25,6 +25,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        'collective.monkeypatcher',
         'plone.api',
         'plone.app.controlpanel',
         'plone.app.theming',
@@ -39,9 +40,10 @@ setup(
         'zope.app.i18n',
         'zope.app.localpermission',
         'zope.event',
+        'zope.globalrequest',
         'zope.i18n',
-        'zope.schema',
         'zope.lifecycleevent',
+        'zope.schema',
     ],
     extras_require={'test': [
         'plone.app.testing',
