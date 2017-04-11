@@ -4,7 +4,14 @@ Changelog
 1.3.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Patch TTW message catalogs to support plonejs18n view (translate-pattern),
+  but note that with plonejsi18n TTW catalog overrides don't cascade with
+  the existing catalogs
+  [datakurre]
+
+- Use theme cache for TTW permissions, because TTW permissions require that
+  their existence is checked on each request
+  [datakurre]
 
 
 1.3.2 (2017-01-03)
