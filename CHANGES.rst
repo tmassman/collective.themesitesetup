@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.4.1 (unreleased)
+1.4.1 (2017-04-11)
 ------------------
 
 - Removed debug print
