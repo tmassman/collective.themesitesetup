@@ -5,6 +5,7 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="collective.themesitesetup">
 
+  <include package="collective.monkeypatcher" />
   <include package="plone.resource" />
   <include package="plone.app.controlpanel" />
   <include package="plone.app.theming" />
